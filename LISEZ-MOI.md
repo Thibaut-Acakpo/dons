@@ -67,3 +67,20 @@ export CSV protégé contre l'injection de formules, dossiers `includes/` et `sq
     assets/img, media     images converties + vidéos
     sql/                  database.sql, donnees_demo.sql
     *.php                 pages (public : index, faire_don, merci, besoins…  |  admin : admin_*, *_besoin, *_repartition)
+
+TABLEAU DE BORD ADMINISTRATEUR, VERSION FINALE
+
+Fichiers à remplacer dans C:\wamp64\www\gestion_dons :
+- assets\css\style.css
+- assets\js\app.js
+- includes\admin_header.php
+- includes\admin_footer.php
+- admin_dashboard.php
+
+Copiez les fichiers en conservant exactement cette arborescence.
+Le reste du projet et la base de données ne sont pas modifiés.
+
+Améliorations : menu mobile en haut à droite, panneau latéral avec voile de fond, fermeture par clic extérieur, Échap et navigation, aria-expanded et focus, cartes statistiques adaptatives, taux d'utilisation, solde négatif visible, infobulles de graphiques, barres accessibles et tableau horizontalement défilable sur petit écran.
+
+Après remplacement, actualisez la page avec Ctrl + F5.
+

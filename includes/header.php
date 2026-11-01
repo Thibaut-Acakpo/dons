@@ -4,11 +4,12 @@ require_once __DIR__ . '/functions.php';
 $pageTitle = isset($pageTitle) ? $pageTitle : SITE_NAME;
 $nav       = isset($nav) ? $nav : '';
 $bodyClass = isset($bodyClass) ? $bodyClass : '';
+// Liens modifiés pour pointer vers index.php avec les ancres
 $menu = array(
-    'home'      => array('index.php', 'Accueil'),
-    'besoins'   => array('besoins.php', 'Nos besoins'),
-    'activites' => array('voir_activites.php', 'Nos enfants en action'),
-    'contact'   => array('contact.php', 'Contact'),
+    'home'      => array('index.php#accueil', 'Accueil'),
+    'besoins'   => array('index.php#besoins', 'Nos besoins'),
+    'activites' => array('index.php#activites', 'Nos enfants en action'),
+    'contact'   => array('index.php#contact', 'Contact'),
 );
 ?><!DOCTYPE html>
 <html lang="fr">
@@ -20,23 +21,26 @@ $menu = array(
 <meta name="theme-color" content="#1b5e9b">
 <script>document.documentElement.classList.add('js')</script>
 <link rel="stylesheet" href="assets/css/style.css?v=<?= filemtime(__DIR__ . '/../assets/css/style.css') ?>">
+<style>
+  section[id] { scroll-margin-top: 100px; }
+</style>
 </head>
 <body class="<?= e($bodyClass) ?>">
 <a class="skip" href="#main">Aller au contenu</a>
 <header class="topbar" id="topbar">
   <div class="wrap topbar-in">
-    <a class="brand" href="index.php" aria-label="<?= e(SITE_NAME) ?> — accueil">
+    <a class="brand" href="index.php#accueil" aria-label="<?= e(SITE_NAME) ?> — accueil">
       <span class="brand-mark"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.9 5 6.2 5c2 0 3.4 1.1 4.3 2.5h3C14.4 6.1 15.8 5 17.8 5c3.3 0 5.3 3.4 3.8 6.8C19.5 16.4 12 21 12 21z"/></svg></span>
       <span class="brand-text"><strong><?= e(SITE_SHORT) ?></strong><small>Orphelinat</small></span>
     </a>
     <button class="nav-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" data-nav-toggle><?= svg_icon('menu') ?></button>
     <nav class="nav" id="nav" aria-label="Navigation principale">
       <?php foreach ($menu as $k => $m): ?>
-        <a href="<?= e($m[0]) ?>" class="<?= $nav === $k ? 'on' : '' ?>"<?= $nav === $k ? ' aria-current="page"' : '' ?>><?= e($m[1]) ?></a>
+        <a href="<?= e($m[0]) ?>" class="<?= $nav === $k ? 'on' : '' ?>"><?= e($m[1]) ?></a>
       <?php endforeach; ?>
       <a class="btn btn-sun btn-sm" href="faire_un_don.php"><?= svg_icon('heart') ?> Faire un don</a>
     </nav>
   </div>
 </header>
-<?php flash_render(); ?>
+<?php /* flash_render(); est déplacé dans la section contact de index.php */ ?>
 <main id="main">

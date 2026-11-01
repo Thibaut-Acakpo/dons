@@ -18,8 +18,58 @@
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   }
+  /* ---- Menu latéral de l'administration : ouverture, fermeture et accessibilité ---- */
+  var side = $('#side');
   var sideBtn = $('[data-side-toggle]');
-  if (sideBtn) { sideBtn.addEventListener('click', function () { $('.side').classList.toggle('open'); }); }
+  var sideBackdrop = $('[data-side-backdrop]');
+
+  function closeAdminMenu(returnFocus) {
+    if (!side || !sideBtn) return;
+    side.classList.remove('open');
+    if (sideBackdrop) sideBackdrop.classList.remove('open');
+    sideBtn.setAttribute('aria-expanded', 'false');
+    sideBtn.setAttribute('aria-label', 'Ouvrir le menu');
+    document.body.classList.remove('admin-menu-open');
+    if (returnFocus) sideBtn.focus();
+  }
+
+  function openAdminMenu() {
+    if (!side || !sideBtn) return;
+    side.classList.add('open');
+    if (sideBackdrop) sideBackdrop.classList.add('open');
+    sideBtn.setAttribute('aria-expanded', 'true');
+    sideBtn.setAttribute('aria-label', 'Fermer le menu');
+    document.body.classList.add('admin-menu-open');
+    var firstLink = $('a', side);
+    if (firstLink) firstLink.focus();
+  }
+
+  if (side && sideBtn) {
+    sideBtn.addEventListener('click', function () {
+      if (side.classList.contains('open')) closeAdminMenu(false);
+      else openAdminMenu();
+    });
+
+    if (sideBackdrop) {
+      sideBackdrop.addEventListener('click', function () { closeAdminMenu(true); });
+    }
+
+    $$('a', side).forEach(function (link) {
+      link.addEventListener('click', function () { closeAdminMenu(false); });
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && side.classList.contains('open')) {
+        closeAdminMenu(true);
+      }
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 900 && side.classList.contains('open')) {
+        closeAdminMenu(false);
+      }
+    });
+  }
 
   /* ---- Apparition au défilement ---- */
   var revealEls = $$('[data-reveal],.bar,.months');
